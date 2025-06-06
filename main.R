@@ -29,43 +29,43 @@ if (!any(str_detect(data_in$variable,regex("[:print:]*bii[:print:]*",ignore_case
   agmip_reg_eu_map <- tibble(region=eu_cty,agmipreg="eue")
 
   data_land_eu <- data_land %>% filter(region %in% eu_cty) %>%
-    group_by(variable,unit,scenario,year) %>%
+    group_by(model,variable,unit,scenario,year) %>%
     summarise(bii_val=sum(bii*pot_npp*value)/sum(pot_npp*value)) %>%
     mutate(region="eue") %>% relocate(region,.after = unit)
 
   # global outputs
   data_land_wld <- data_land %>%
-    group_by(variable,unit,scenario,year) %>%
+    group_by(model,variable,unit,scenario,year) %>%
     summarise(bii_val=sum(bii*pot_npp*value)/sum(pot_npp*value)) %>%
     mutate(region="wld") %>% relocate(region,.after = unit)
 
   # north america
   data_land_nam <- data_land %>% filter(region %in% c("can","usa")) %>%
-    group_by(variable,unit,scenario,year) %>%
+    group_by(model,variable,unit,scenario,year) %>%
     summarise(bii_val=sum(bii*pot_npp*value)/sum(pot_npp*value)) %>%
     mutate(region="nam") %>% relocate(region,.after = unit)
 
   # other america
   data_land_oam <- data_land %>% filter(region %in% c("bra","osa")) %>%
-    group_by(variable,unit,scenario,year) %>%
+    group_by(model,variable,unit,scenario,year) %>%
     summarise(bii_val=sum(bii*pot_npp*value)/sum(pot_npp*value)) %>%
     mutate(region="oam") %>% relocate(region,.after = unit)
 
   # africa & middle east
   data_land_ame <- data_land %>% filter(region %in% c("men","ssa")) %>%
-    group_by(variable,unit,scenario,year) %>%
+    group_by(model,variable,unit,scenario,year) %>%
     summarise(bii_val=sum(bii*pot_npp*value)/sum(pot_npp*value)) %>%
     mutate(region="ame") %>% relocate(region,.after = unit)
 
   # southern asia
   data_land_sas <- data_land %>% filter(region %in% c("chn","ind","sea","oas")) %>%
-    group_by(variable,unit,scenario,year) %>%
+    group_by(model,variable,unit,scenario,year) %>%
     summarise(bii_val=sum(bii*pot_npp*value)/sum(pot_npp*value)) %>%
     mutate(region="sas") %>% relocate(region,.after = unit)
 
   # original regions
   data_all <- data_land %>%
-    group_by(variable,unit,region,scenario,year) %>%
+    group_by(model,variable,unit,region,scenario,year) %>%
     summarise(bii_val=sum(bii*pot_npp*value)/sum(pot_npp*value))
 
   # merge data
